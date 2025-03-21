@@ -11,7 +11,6 @@ from schemas.movies import (
 
 router = APIRouter()
 
-# Write your code here
 
 @router.get("/movies/", response_model=MovieListResponseSchema)
 async def get_movies(
@@ -45,3 +44,11 @@ async def get_movies(
         "total_items": total_items
     }
 
+
+@router.get("/movies/{film_id}/", response_model=MovieDetailResponseSchema)
+async def get_film(film_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(MovieModel).where(MovieModel.id == film_id))
+    film = result.scalar_one_or_none()
+    if not film:
+        raise HTTPException(status_code=404, detail="Movie with the given ID was not found.")
+    return film
