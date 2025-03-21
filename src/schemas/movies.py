@@ -1,5 +1,5 @@
-# Write your code here
 import datetime
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -25,3 +25,13 @@ class MovieDetailResponseSchema(MovieBase):
     class Config:
         from_attributes = True
 
+
+class MovieListResponseSchema(BaseModel):
+    movies: List[MovieDetailResponseSchema]
+    prev_page: Optional[str]
+    next_page: Optional[str]
+    total_pages: int
+    total_items: int
+
+    class Config:
+        from_attributes = True
