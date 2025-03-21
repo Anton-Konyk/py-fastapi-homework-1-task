@@ -18,3 +18,10 @@ class MovieBase(BaseModel):
     revenue: float
     country: str
 
+
+class MovieDetailResponseSchema(MovieBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
